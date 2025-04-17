@@ -54,15 +54,17 @@ function App() {
 
   return (
     <div className={darkMode ? 'dark' : ''}>
-      <div className="bg-gray-100 dark:bg-gray-900 min-h-screen py-10 px-4 font-sans">
+      <div className="min-h-screen bg-white dark:bg-gray-900 py-10 px-4 font-sans transition-colors duration-300 text-gray-900 dark:text-gray-100">
         <div className="max-w-6xl mx-auto">
+        <div className="flex justify-end mb-4">
+          <button
+            onClick={() => setDarkMode(!darkMode)}
+            className="bg-gray-300 dark:bg-gray-700 text-gray-900 dark:text-gray-100 px-4 py-2 rounded"
+          >
+            Toggle {darkMode ? 'Light' : 'Dark'} Mode
+          </button>
+        </div>
         <h1 className="text-4xl font-extrabold text-center text-gray-900 dark:text-white mb-10 tracking-tight">Workout AI Logger</h1>
-        <button
-          onClick={() => setDarkMode(!darkMode)}
-          className="bg-gray-300 dark:bg-gray-700 text-gray-900 dark:text-gray-100 px-4 py-2 rounded mb-6 block mx-auto"
-        >
-          Toggle {darkMode ? 'Light' : 'Dark'} Mode
-        </button>
       <button
         onClick={getGlobalRecommendation}
         className="bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 transition mb-8 block mx-auto shadow"
@@ -76,7 +78,7 @@ function App() {
       )}
       <h2 className="text-2xl font-semibold text-center text-gray-700 dark:text-gray-200 mb-6">Workout Summary</h2>
       {allSessions.length === 0 ? (
-        <p>Loading workouts...</p>
+        <p className="text-center text-gray-700 dark:text-gray-300">Loading workouts...</p>
       ) : (
         allSessions.slice(-5).map((session, index) => {
           const heartRates = session.filter(d => d.heart_rate).map(d => d.heart_rate);
@@ -96,7 +98,7 @@ function App() {
 
             return (
             <div key={index} className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 mb-10 max-w-3xl mx-auto border border-gray-200 dark:border-gray-700">
-              <h2 className="text-2xl font-bold text-gray-800 mb-3">Swim on {workoutDate}</h2>
+              <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-3">Workout on {workoutDate}</h2>
               <p className="text-gray-600 dark:text-gray-300"><span className="font-medium">Duration:</span> {duration} minutes</p>
               <p className="text-gray-600 dark:text-gray-300"><span className="font-medium">Max Heart Rate:</span> {max}</p>
               <p className="text-gray-600 dark:text-gray-300"><span className="font-medium">Avg Heart Rate:</span> {avg}</p>
