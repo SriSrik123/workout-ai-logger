@@ -3,7 +3,7 @@ services:
     name: workout-ai-backend
     env: python
     pythonVersion: 3.11
-    buildCommand: ""
+    buildCommand: pip install -r requirements.txt
     startCommand: python app.py
     rootDir: backend
     plan: free
