@@ -4,7 +4,9 @@ from flask import jsonify
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app)  # allow React to talk to Flask
+from flask_cors import CORS
+
+CORS(app, resources={r"/analyze": {"origins": "https://workout-ai-logger.vercel.app"}})
 
 @app.route("/analyze", methods=["POST"])
 def analyze():

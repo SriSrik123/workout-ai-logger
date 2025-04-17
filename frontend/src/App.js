@@ -6,6 +6,10 @@ const workoutFiles = Array.from({ length: 351 }, (_, i) => `Workout${i + 1}.json
 function App() {
   const [allSessions, setAllSessions] = useState([]);
   const [recommendations, setRecommendations] = useState({});
+  const [darkMode, setDarkMode] = useState(() => {
+    const saved = localStorage.getItem("darkMode");
+    return saved === "true" || false;
+  });
 
   useEffect(() => {
     const loadWorkouts = async () => {
@@ -28,6 +32,10 @@ function App() {
 
     loadWorkouts();
   }, []);
+  
+  useEffect(() => {
+    localStorage.setItem("darkMode", darkMode);
+  }, [darkMode]);
 
   const getGlobalRecommendation = async () => {
     const combined = allSessions.flat();
@@ -45,16 +53,23 @@ function App() {
   };
 
   return (
-    <div className="bg-gray-50 min-h-screen py-10 px-4 font-sans">
-      <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">Workout Log</h1>
+    <div className={`${darkMode ? 'dark' : ''} bg-gray-100 dark:bg-gray-900 min-h-screen py-10 px-4 font-sans`}>
+      <div className="max-w-6xl mx-auto">
+        <h1 className="text-4xl font-extrabold text-center text-gray-900 dark:text-white mb-10 tracking-tight">Workout AI Logger</h1>
+        <button
+          onClick={() => setDarkMode(!darkMode)}
+          className="bg-gray-300 dark:bg-gray-700 text-gray-900 dark:text-gray-100 px-4 py-2 rounded mb-6 block mx-auto"
+        >
+          Toggle {darkMode ? 'Light' : 'Dark'} Mode
+        </button>
       <button
         onClick={getGlobalRecommendation}
-        className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition mb-6 block mx-auto"
+        className="bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 transition mb-8 block mx-auto shadow"
       >
         Get Overall AI Suggestion
       </button>
       {recommendations.global && (
-        <p className="text-blue-700 text-center text-lg mb-6">
+        <p className="text-indigo-700 dark:text-indigo-300 text-center text-lg mb-8 italic">
           💡 {recommendations.global}
         </p>
       )}
@@ -77,14 +92,14 @@ function App() {
             return null;
           }
 
-          return (
-            <div key={index} className="bg-white rounded-lg shadow-md p-6 mb-6 max-w-2xl mx-auto">
-              <h2 className="text-xl font-semibold text-gray-800 mb-2">Swim on {workoutDate}</h2>
-              <p className="text-gray-700"><strong>Duration:</strong> {duration} minutes</p>
-              <p className="text-gray-700"><strong>Max Heart Rate:</strong> {max}</p>
-              <p className="text-gray-700"><strong>Avg Heart Rate:</strong> {avg}</p>
-              <p className="text-gray-700"><strong>Distance:</strong> {2 * distance} meters</p>
-              <div className="h-64 mt-4">
+            return (
+            <div key={index} className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 mb-10 max-w-3xl mx-auto border border-gray-200 dark:border-gray-700">
+              <h2 className="text-2xl font-bold text-gray-800 mb-3">Swim on {workoutDate}</h2>
+              <p className="text-gray-600 dark:text-gray-300"><span className="font-medium">Duration:</span> {duration} minutes</p>
+              <p className="text-gray-600 dark:text-gray-300"><span className="font-medium">Max Heart Rate:</span> {max}</p>
+              <p className="text-gray-600 dark:text-gray-300"><span className="font-medium">Avg Heart Rate:</span> {avg}</p>
+              <p className="text-gray-600 dark:text-gray-300"><span className="font-medium">Distance:</span> {2 * distance} meters</p>
+              <div className="w-full h-80 mt-6">
                 <ResponsiveContainer width="100%" height="100%">
                   <LineChart data={session.filter(d => d.heart_rate && d.start_time).map(d => ({
                     time: new Date(d.start_time).toLocaleTimeString(),
@@ -101,6 +116,7 @@ function App() {
           );
         })
       )}
+      </div>
     </div>
   );
 }
