@@ -91,7 +91,7 @@ function App() {
               <p><strong>Duration:</strong> {duration} minutes</p>
               <p><strong>Max Heart Rate:</strong> {max}</p>
               <p><strong>Avg Heart Rate:</strong> {avg}</p>
-              <p><strong>Distance:</strong> {distance} meters</p>
+              <p><strong>Distance:</strong> {2*distance} meters</p>
               <div style={{ height: 200, marginTop: '1rem' }}>
                 <ResponsiveContainer width="100%" height="100%">
                   <LineChart data={session.filter(d => d.heart_rate && d.start_time).map(d => ({

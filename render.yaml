@@ -7,3 +7,6 @@ services:
     startCommand: python app.py
     rootDir: backend
     plan: free
+    envVars:
+      - key: RENDER_PYTHON_PACKAGE_MANAGER
+        value: pip
