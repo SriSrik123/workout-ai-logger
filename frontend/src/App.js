@@ -81,6 +81,12 @@ function App() {
             <p className="text-center text-gray-700 dark:text-gray-300">Loading workouts...</p>
           ) : (
             [...allSessions]
+              .filter(session => {
+                const hasValidStart = session.some(d => typeof d.start_time === 'number');
+                const hasHR = session.some(d => typeof d.heart_rate === 'number');
+                const hasDistance = session.some(d => typeof d.distance === 'number' && d.distance > 0);
+                return hasValidStart && hasHR && hasDistance;
+              })
               .sort((a, b) => {
                 const aTime = Math.min(...a.map(d => d.start_time || Infinity));
                 const bTime = Math.min(...b.map(d => d.start_time || Infinity));
