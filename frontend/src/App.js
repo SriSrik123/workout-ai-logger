@@ -32,7 +32,7 @@ function App() {
   const getGlobalRecommendation = async () => {
     const combined = allSessions.flat();
     try {
-      const res = await fetch('http://127.0.0.1:5000/analyze', {
+      const res = await fetch("https://workout-ai-backend.onrender.com/analyze", {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ session: combined, goal: 'endurance' })
@@ -87,12 +87,12 @@ function App() {
               padding: '1.5rem',
               marginBottom: '1.5rem'
             }}>
-              <h2>Workout {index + 1}</h2>
+              <h2>Swim on {workoutDate}</h2>
               <p><strong>Duration:</strong> {duration} minutes</p>
               <p><strong>Max Heart Rate:</strong> {max}</p>
               <p><strong>Avg Heart Rate:</strong> {avg}</p>
               <p><strong>Distance:</strong> {2*distance} meters</p>
-              <div style={{ height: 200, marginTop: '1rem' }}>
+              <div style={{ height: 250, marginTop: '1rem' }}>
                 <ResponsiveContainer width="100%" height="100%">
                   <LineChart data={session.filter(d => d.heart_rate && d.start_time).map(d => ({
                     time: new Date(d.start_time).toLocaleTimeString(),
