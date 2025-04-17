@@ -80,7 +80,14 @@ function App() {
           {allSessions.length === 0 ? (
             <p className="text-center text-gray-700 dark:text-gray-300">Loading workouts...</p>
           ) : (
-            allSessions.slice(-5).map((session, index) => {
+            [...allSessions]
+              .sort((a, b) => {
+                const aTime = Math.min(...a.map(d => d.start_time || Infinity));
+                const bTime = Math.min(...b.map(d => d.start_time || Infinity));
+                return aTime - bTime;
+              })
+              .slice(-5)
+              .map((session, index) => {
               const heartRates = session.filter(d => d.heart_rate).map(d => d.heart_rate);
               const max = heartRates.length ? Math.max(...heartRates) : 'N/A';
               const avg = heartRates.length ? Math.round(heartRates.reduce((a, b) => a + b, 0) / heartRates.length) : 'N/A';
