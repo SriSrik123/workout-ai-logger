@@ -53,8 +53,9 @@ function App() {
   };
 
   return (
-    <div className={`${darkMode ? 'dark' : ''} bg-gray-100 dark:bg-gray-900 min-h-screen py-10 px-4 font-sans`}>
-      <div className="max-w-6xl mx-auto">
+    <div className={darkMode ? 'dark' : ''}>
+      <div className="bg-gray-100 dark:bg-gray-900 min-h-screen py-10 px-4 font-sans">
+        <div className="max-w-6xl mx-auto">
         <h1 className="text-4xl font-extrabold text-center text-gray-900 dark:text-white mb-10 tracking-tight">Workout AI Logger</h1>
         <button
           onClick={() => setDarkMode(!darkMode)}
@@ -73,6 +74,7 @@ function App() {
           💡 {recommendations.global}
         </p>
       )}
+      <h2 className="text-2xl font-semibold text-center text-gray-700 dark:text-gray-200 mb-6">Workout Summary</h2>
       {allSessions.length === 0 ? (
         <p>Loading workouts...</p>
       ) : (
@@ -116,6 +118,7 @@ function App() {
           );
         })
       )}
+      </div>
       </div>
     </div>
   );
