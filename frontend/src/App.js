@@ -45,18 +45,16 @@ function App() {
   };
 
   return (
-    <div style={{
-      padding: '2rem',
-      fontFamily: 'Arial, sans-serif',
-      backgroundColor: '#f7f9fc',
-      minHeight: '100vh'
-    }}>
-      <h1 style={{ marginBottom: '2rem', color: '#333' }}>Workout Log</h1>
-      <button onClick={getGlobalRecommendation} style={{ marginBottom: '2rem' }}>
+    <div className="bg-gray-50 min-h-screen py-10 px-4 font-sans">
+      <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">Workout Log</h1>
+      <button
+        onClick={getGlobalRecommendation}
+        className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition mb-6 block mx-auto"
+      >
         Get Overall AI Suggestion
       </button>
       {recommendations.global && (
-        <p style={{ marginBottom: '2rem', color: '#0077cc' }}>
+        <p className="text-blue-700 text-center text-lg mb-6">
           💡 {recommendations.global}
         </p>
       )}
@@ -80,19 +78,13 @@ function App() {
           }
 
           return (
-            <div key={index} style={{
-              backgroundColor: 'white',
-              borderRadius: '8px',
-              boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
-              padding: '1.5rem',
-              marginBottom: '1.5rem'
-            }}>
-              <h2>Swim on {workoutDate}</h2>
-              <p><strong>Duration:</strong> {duration} minutes</p>
-              <p><strong>Max Heart Rate:</strong> {max}</p>
-              <p><strong>Avg Heart Rate:</strong> {avg}</p>
-              <p><strong>Distance:</strong> {2*distance} meters</p>
-              <div style={{ height: 250, marginTop: '1rem' }}>
+            <div key={index} className="bg-white rounded-lg shadow-md p-6 mb-6 max-w-2xl mx-auto">
+              <h2 className="text-xl font-semibold text-gray-800 mb-2">Swim on {workoutDate}</h2>
+              <p className="text-gray-700"><strong>Duration:</strong> {duration} minutes</p>
+              <p className="text-gray-700"><strong>Max Heart Rate:</strong> {max}</p>
+              <p className="text-gray-700"><strong>Avg Heart Rate:</strong> {avg}</p>
+              <p className="text-gray-700"><strong>Distance:</strong> {2 * distance} meters</p>
+              <div className="h-64 mt-4">
                 <ResponsiveContainer width="100%" height="100%">
                   <LineChart data={session.filter(d => d.heart_rate && d.start_time).map(d => ({
                     time: new Date(d.start_time).toLocaleTimeString(),
