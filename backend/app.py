@@ -8,15 +8,13 @@ import os
 
 genai.configure(api_key="AIzaSyBUMckan3yHYFY1SP-7k6eUQg2w5nsBcCs")
 
-
-from flask_cors import CORS
-CORS(app, resources={r"/analyze": {"origins": "https://workout-ai-logger.vercel.app"}})
-
-
+app = Flask(__name__)
+CORS(app, resources={r"/analyze": {"origins": "*"}}, supports_credentials=True)
 
 @app.route("/analyze", methods=["POST"])
 def analyze():
     data = request.get_json()
+    print("Received data:", data)
     session = data.get("session", [])
     goal = data.get("goal", "general fitness")
 
