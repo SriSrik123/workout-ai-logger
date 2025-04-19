@@ -7,10 +7,11 @@ import traceback
 import google.generativeai as genai
 import os
 
-genai.configure(api_key="AIzaSyBUMckan3yHYFY1SP-7k6eUQg2w5nsBcCs")
+# Set the API key for Google Generative AI
 
+genai.configure(api_key=os.environ["GOOGLE_API_KEY"])
 app = Flask(__name__)
-CORS(app, resources={r"/analyze": {"origins": "https://workout-ai-logger.vercel.app"}}, supports_credentials=True)
+CORS(app)
 
 @app.route("/ping")
 def ping():
@@ -26,9 +27,7 @@ def analyze():
     try:
         model = genai.GenerativeModel("gemini-pro")
         prompt = f"Analyze this user's recent workouts and provide one personalized workout suggestion based on their goal: {goal}.\n\nData:\n{session}"
-
         response = model.generate_content(prompt)
-
         return jsonify({"recommendation": response.text})
     except Exception as e:
         print("Error during analysis:")
