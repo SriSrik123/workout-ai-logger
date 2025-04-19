@@ -9,7 +9,7 @@ import os
 genai.configure(api_key="AIzaSyBUMckan3yHYFY1SP-7k6eUQg2w5nsBcCs")
 
 app = Flask(__name__)
-CORS(app, origins=["https://workout-ai-logger.vercel.app"])
+CORS(app, resources={r"/analyze": {"origins": "https://workout-ai-logger.vercel.app"}}, supports_credentials=True)
 
 @app.route("/analyze", methods=["POST"])
 def analyze():
