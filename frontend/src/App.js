@@ -10,6 +10,7 @@ function App() {
     const saved = localStorage.getItem("darkMode");
     return saved === "true" || false;
   });
+  const [loadingAI, setLoadingAI] = useState(false);
 
   useEffect(() => {
     const loadWorkouts = async () => {
@@ -38,6 +39,7 @@ function App() {
   }, [darkMode]);
 
   const getGlobalRecommendation = async () => {
+    setLoadingAI(true);
     const combined = allSessions.flat();
     try {
       const res = await fetch("https://workout-ai-backend.onrender.com/analyze", {
@@ -48,8 +50,10 @@ function App() {
       const result = await res.json();
       setRecommendations({ global: result.recommendation });
     } catch (err) {
-      setRecommendations({ global: 'Error getting recommendation.' });
+      console.error("Error getting recommendation:", err);
+      setRecommendations({ global: "⚠️ Unable to fetch AI suggestion. Please try again." });
     }
+    setLoadingAI(false);
   };
 
   return (
@@ -67,9 +71,10 @@ function App() {
           <h1 className="text-4xl font-extrabold text-center text-gray-900 dark:text-white mb-10 tracking-tight">Workout AI Logger</h1>
           <button
             onClick={getGlobalRecommendation}
-            className="bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 transition mb-8 block mx-auto shadow"
+            className="bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 transition mb-8 block mx-auto shadow disabled:opacity-50"
+            disabled={loadingAI}
           >
-            Get Overall AI Suggestion
+            {loadingAI ? "Loading..." : "Get Overall AI Suggestion"}
           </button>
           {recommendations.global && (
             <p className="text-indigo-700 dark:text-indigo-300 text-center text-lg mb-8 italic">
