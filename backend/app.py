@@ -11,7 +11,7 @@ import os
 
 genai.configure(api_key=os.environ["GOOGLE_API_KEY"])
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/analyze": {"origins": "*"}}, allow_headers="*", supports_credentials=True)
 
 @app.route("/ping")
 def ping():
